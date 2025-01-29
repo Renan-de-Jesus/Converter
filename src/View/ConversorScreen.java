@@ -7,14 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Model.SearchFiles;
 import Model.TextToPDF;
@@ -22,7 +17,7 @@ import Model.TextToPDF;
 public class ConversorScreen extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	private SearchFiles sf;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -54,12 +49,13 @@ public class ConversorScreen extends JFrame {
 		fileSelected.setEditable(false);
 		fileSelected.setBackground(new Color(192, 192, 192));
 		getContentPane().add(fileSelected);
+		
+		sf = new SearchFiles(fileSelected);
 
 		JButton btnNewButton = new JButton("...");
 		btnNewButton.setBounds(211, 107, 45, 25);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SearchFiles sf = new SearchFiles();
 				sf.selectFile();
 			}
 		});
@@ -69,7 +65,7 @@ public class ConversorScreen extends JFrame {
 		btnConverter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TextToPDF cv = new TextToPDF();
-				cv.converter();
+				cv.converter(sf.getSelectedFile());
 			}
 		});
 		btnConverter.setBounds(59, 218, 165, 56);
